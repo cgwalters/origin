@@ -84,6 +84,14 @@ var _ = ginkgo.Describe("[sig-network] Internal connectivity", func() {
 										},
 									},
 								},
+								// Current OpenShift gives CAP_NET_RAW by default but we want to remove it.
+								// https://github.com/openshift/machine-config-operator/pull/2051
+								// https://github.com/openshift/machine-config-operator/pull/2082
+								SecurityContext: &v1.SecurityContext{
+									Capabilities: &v1.Capabilities{
+										Add: []v1.Capability{"CAP_NET_RAW"},
+									},
+								},
 							},
 						},
 					},
